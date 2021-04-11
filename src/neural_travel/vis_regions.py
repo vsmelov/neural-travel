@@ -34,10 +34,12 @@ def vis_regions_to_file(
     else:
         assert boxes.shape[0] == masks.shape[-1] == class_ids.shape[0]
 
+    fig = plt.figure()
+
     # If no axis is passed, create one and automatically call show()
     auto_show = False
     if not ax:
-        _, ax = plt.subplots(1, figsize=figsize)
+        _, ax = fig.subplots(1, figsize=figsize)
         auto_show = True
 
     # Generate random colors
@@ -93,4 +95,5 @@ def vis_regions_to_file(
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
-    ax.savefig(out_image_path)
+    extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    fig.savefig(out_image_path, bbox_inches=extent)
