@@ -93,4 +93,4 @@ def vis_regions_to_file(
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
-    plt.savefig(out_image_path)
+    ax.savefig(out_image_path)
