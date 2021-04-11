@@ -11,7 +11,7 @@ from neural_travel.vis_regions import vis_regions_to_file
 
 # Root directory of the project
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-print(f'{REPO_DIR=}')
+print('REPO_DIR {}'.format(REPO_DIR))
 ROOT_DIR = os.path.join(REPO_DIR, 'Mask_RCNN')
 
 # Import Mask RCNN
