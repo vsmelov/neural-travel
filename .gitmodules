@@ -1,0 +1,4 @@
+[submodule "swapping-autoencoder-pytorch"]
+	path = swapping-autoencoder-pytorch
+	url = https://github.com/taesungp/swapping-autoencoder-pytorch
+	branch = c357976cdb4d1dbd45ea6328b915d3b339924fce
