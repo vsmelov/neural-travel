@@ -20,5 +20,5 @@ virtualenv -p python3.7 venv
 . venv/bin/activate
 pip install -r requirements.txt
 
-PYTHONPATH=./src:./Mask_RCNN python src/neural_travel/mycoco.py --img=
+PYTHONPATH=./src:./Mask_RCNN:./Mask_RCNN/samples/coco python src/neural_travel/mycoco.py --img=
 ```

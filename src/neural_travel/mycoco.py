@@ -94,8 +94,12 @@ results = model.detect([image], verbose=1)
 # Visualize results
 r = results[0]
 vis_regions_to_file(
-    image, r['rois'], r['masks'], r['class_ids'],
-    class_names, r['scores'],
+    image=image,
+    boxes=r['rois'],
+    masks=r['masks'],
+    class_ids=r['class_ids'],
+    class_names=class_names,
+    scores=r['scores'],
     out_image_path=args.out,
 )
 
