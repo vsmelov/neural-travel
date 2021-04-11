@@ -39,7 +39,8 @@ def vis_regions_to_file(
     # If no axis is passed, create one and automatically call show()
     auto_show = False
     if not ax:
-        _, ax = fig.subplots(1, figsize=figsize)
+        _, ax = fig.subplots(1)
+        # _, ax = fig.subplots(1, figsize=figsize)
         auto_show = True
 
     # Generate random colors
