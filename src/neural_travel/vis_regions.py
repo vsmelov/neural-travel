@@ -7,6 +7,14 @@ from skimage.measure import find_contours
 from mrcnn.visualize import random_colors, apply_mask
 
 
+def apply_bw_mask(image, mask):
+    """Apply the given mask to the image.
+    """
+    for c in range(3):
+        image[:, :] = np.where(mask == 1, 255, image[:, :])
+    return image
+
+
 def vis_regions_to_file(
         image, boxes, masks, class_ids, class_names,
         out_image_path: str,
@@ -48,6 +56,7 @@ def vis_regions_to_file(
 
     # Show area outside image boundaries.
     height, width = image.shape[:2]
+    print('height {} width {}'.format(height, width))
     # ax.set_ylim(height + 10, -10)
     # ax.set_xlim(-10, width + 10)
     ax.set_ylim(height, 0)
@@ -56,6 +65,7 @@ def vis_regions_to_file(
     ax.set_title(title)
 
     masked_image = image.astype(np.uint32).copy()
+    bw_mask = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
     for i in range(N):
         color = colors[i]
 
@@ -85,11 +95,13 @@ def vis_regions_to_file(
         mask = masks[:, :, i]
         if show_mask:
             masked_image = apply_mask(masked_image, mask, color)
+            bw_mask = apply_bw_mask(bw_mask, mask)
 
         # Mask Polygon
         # Pad to ensure proper polygons for masks that touch image edges.
         padded_mask = np.zeros(
             (mask.shape[0] + 2, mask.shape[1] + 2), dtype=np.uint8)
+        padding = 1
         padded_mask[1:-1, 1:-1] = mask
         contours = find_contours(padded_mask, 0.5)
         for verts in contours:
@@ -97,6 +109,7 @@ def vis_regions_to_file(
             verts = np.fliplr(verts) - 1
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
-    ax.imshow(masked_image.astype(np.uint8))
-    extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
-    fig.savefig(out_image_path, bbox_inches=extent)
+    # ax.imshow(masked_image.astype(np.uint8))
+    # extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    # fig.savefig(out_image_path, bbox_inches=extent)
+    return bw_mask

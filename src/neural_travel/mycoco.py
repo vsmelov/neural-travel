@@ -85,13 +85,8 @@ class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
                'teddy bear', 'hair drier', 'toothbrush']
 
-# Load a random image from the images folder
 image = skimage.io.imread(args.img)
-
-# Run detection
 results = model.detect([image], verbose=1)
-
-# Visualize results
 r = results[0]
 vis_regions_to_file(
     image=image,
